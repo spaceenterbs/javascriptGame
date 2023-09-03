@@ -4,4 +4,32 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
   const ctx = canvas.getContext('2d'); // canvas 요소의 컨텍스트를 가져온다.
   canvas.width = 500; // px
   canvas.height = 500; // px
+
+  class InputHandler {
+
+  }
+  class Projectile {
+
+  }
+  class Particle {
+
+  }
+  class Player {
+
+  }
+  class Enemy {
+
+  }
+  class Layer {
+
+  }
+  class Background {
+
+  }
+  class UI {
+
+  }
+  class Game {
+    
+  }
 })  
