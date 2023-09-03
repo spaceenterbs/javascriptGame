@@ -10,5 +10,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #4d79bc
+  background: #4d79bc;
+  max-width: 100%; /* 화면을 넘어서도 화면에 맞게 조정 */
+  max-height: 100%;
 }
