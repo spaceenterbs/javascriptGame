@@ -6,7 +6,23 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
   canvas.height = 500; // px
 
   class InputHandler {
-
+    constructor(game){
+      this.game = game;
+      window.addEventListener('keydown', e => { // custom variable name "e" for event
+        if ((e.key === 'ArrowUp') ||
+            ((e.key === 'ArrowDown')
+        )&& this.game.keys.indexOf(e.key) === -1){
+          this.game.keys.push(e.key);
+        }
+        console.log(this.game.keys);
+      });
+      window.addEventListener('keyup', e =>{
+        if (this.game.keys.indexOf(e.key) > -1){
+          this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
+        }
+        console.log(this.game.keys);
+        });
+    }
   }
   class Projectile {
 
@@ -22,13 +38,17 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
       this.height = 190;
       this.x = 20;
       this.y = 100;
-      this.speedY = 0;
+      this.speedY = 0; // +는 아래로, -는 위로
+      this.maxSpeed = 3;
     }
     update(){
+      if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
+      else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed ;
+      else this.speedY = 0;
       this.y += this.speedY;
     }
-    draw(){
-      context.fillRect(this.x, this.y, this.width, this.height);
+    draw(context){
+      context.fillRect(this.x, this.y, this.width, this.height); // context를 ctx로 바꿨음. 은 매개변수에 아무것도 없을 때. by chatgpt.
     }
   }
   class Enemy {
@@ -48,6 +68,8 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
       this.width = width;
       this.height = height;
       this.player = new Player(this);
+      this.input = new InputHandler(this);
+      this.keys = []; 
     }
     update(){
       this.player.update();
@@ -58,4 +80,12 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
   }
 
   const game = new Game(canvas.width, canvas.height);
+  // animation loop
+  function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);    
+    game.update();
+    game.draw(ctx);
+    requestAnimationFrame(animate);
+  }
+  animate();
 })  
