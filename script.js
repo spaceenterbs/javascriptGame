@@ -16,7 +16,8 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
   }
   class Player {
     constructor(game){
-      this.game = game;
+      this.game = game; // this.game의 game은 객체의 속성(property) 이름.
+      // = 우측의 game은 생성자 함수의 매개변수(parameter) 이름.
       this.width = 120;
       this.height = 190;
       this.x = 20;
@@ -43,6 +44,18 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
 
   }
   class Game { // brain of entire project
-    
+    constructor(width, height){
+      this.width = width;
+      this.height = height;
+      this.player = new Player(this);
+    }
+    update(){
+      this.player.update();
+    }
+    draw(context){
+      this.player.draw(context);
+    }
   }
+
+  const game = new Game(canvas.width, canvas.height);
 })  
