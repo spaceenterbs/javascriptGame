@@ -8,20 +8,30 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
   class InputHandler {
     constructor(game){
       this.game = game;
+      // window.addEventListener('keydown', e => { // custom variable name "e" for event
+      //   if ((e.key === 'ArrowUp') ||
+      //       ((e.key === 'ArrowDown')
+      //   )&& this.game.keys.indexOf(e.key) === -1){
+      //     this.game.keys.push(e.key);
+      //   }
+      //   console.log(this.game.keys);
+      // });
+      // window.addEventListener('keyup', e =>{
+      //   if (this.game.keys.indexOf(e.key) > -1){
+      //     this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
+      //   }
+      //   console.log(this.game.keys);
+      //   });
       window.addEventListener('keydown', e => { // custom variable name "e" for event
-        if ((e.key === 'ArrowUp') ||
-            ((e.key === 'ArrowDown')
-        )&& this.game.keys.indexOf(e.key) === -1){
-          this.game.keys.push(e.key);
-        }
-        console.log(this.game.keys);
+        if (e.key === 'ArrowUp') this.game.keys['ArrowUp'] = true;
+        else if (e.key === 'ArrowDown') this.game.keys['ArrowDown'] = true;
       });
-      window.addEventListener('keyup', e =>{
-        if (this.game.keys.indexOf(e.key) > -1){
-          this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
-        }
-        console.log(this.game.keys);
-        });
+      
+      window.addEventListener('keyup', e => {
+        if (e.key === 'ArrowUp') this.game.keys['ArrowUp'] = false;
+        else if (e.key === 'ArrowDown') this.game.keys['ArrowDown'] = false;
+      });
+      
     }
   }
   class Projectile {
@@ -42,11 +52,18 @@ window.addEventListener('load', function(){ // 웹 페이지의 모든 리소스
       this.maxSpeed = 3;
     }
     update(){
-      if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
-      else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed ;
+      if (this.game.keys['ArrowUp']) this.speedY = -this.maxSpeed;
+      else if (this.game.keys['ArrowDown']) this.speedY = this.maxSpeed;
       else this.speedY = 0;
       this.y += this.speedY;
     }
+    
+    // update(){
+    //   if (this.game.keys.includes('ArrowUp')) this.speedY = -this.maxSpeed;
+    //   else if (this.game.keys.includes('ArrowDown')) this.speedY = this.maxSpeed ;
+    //   else this.speedY = 0;
+    //   this.y += this.speedY;
+    // }
     draw(context){
       context.fillRect(this.x, this.y, this.width, this.height); // context를 ctx로 바꿨음. 은 매개변수에 아무것도 없을 때. by chatgpt.
     }
